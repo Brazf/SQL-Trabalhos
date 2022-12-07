@@ -1,0 +1,287 @@
+-- INSERT DOS ALUNOS
+INSERT INTO ALUNO (MATRICULA, NOME, EMAIL, CPF, SEXO, ESTADO, CIDADE, RUA, LOGIN, SENHA) VALUES (123,	'José Ricardo',	'ricardo@gmail.com',	123456789,	'M',	'PE',	'Pesqueira',	'Rua da Laje',	'ricardinho157', 'ricardinho157'),
+(133, 'Tomás Abdias',	'tomas@gmail.com',	874556789,	'M',	'PE',	'São Caetano',	'Rua do Beco',	'tomas',	'tomas2020'),
+(144,	'Carla Santos', 'carla@gmail.com',	874559635,	'F',	'PE',	'Caruaru',	'Rua do Buraco',	'carla',	'carla000'),
+(155,	'Fábio Braz',	'fabio@gmail.com',	111111111,	'M',	'PE',	'Buíque',	'Beco da Gia',	'fabio',	'123'),
+(666,	'Edson Valença',	'edsonbunitao@gmail.com',	666666666,	'M',	'SP',	'Santa Rita do Passa Quatro',	'Rua 1',	'edsonbunitao',	'6666'),
+(166,	'Amanda Souza',	'amanda@gmail.com',	896566622,	'F',	'SP',	'São Paulo',	'Rua Aurora',	'amanda',	'amnsd84'),
+(177,	'Ana Merano', 'ana@gmail.com',	896123622,	'F',	'BA',	'Salvador',	'Rua Meca',	'ana',	'ana875'),
+(188,	'Caio Almeida',	'caio@gmail.com',	444423622,	'M',	'CE',	'Fortaleza',	'Rua Sornoza',	'caio',	'85421'),
+(199,	'Carol Sampaio',	'carol@hotmail.com',	422423622,	'F',	'PB',	'João Pessoa',	'Rua Alarmida',	'carol',	'carosilnha123'),
+(200,	'Fátima Ferreira',	'fatima@hotmail.com',	545456456,	'F',	'RJ',	'Rio de Janeiro',	'Rua Gloriosa',	'fatima',	'9999');
+
+-- INSERT CURSOS
+insert into curso (id, nome, grau) values (001, 'Técnico em Enfermagem', 'Técnico');
+insert into curso (id, nome, grau) values (002, 'Técnico em Agropecuária', 'Técnico');
+update disciplina set id_curso = 001 where id = 25874;
+update disciplina set id_curso = 002 where id = 12365;
+
+--INSERT DA UNIVERSIDADE
+
+insert into universidade (nome, endereco, email, telefone) values ('IFPE', 'Rua dois e oitocentos', 'ifpe@hotmail.com', 31254789);
+insert into universidade (nome, endereco, email, telefone) values ('Mauricio de Nassau', 'Rua Almeida Torres', 'mnassau@gmail.com', 31657789);
+
+-- INSERT DO FUNCIONÁRIO DIRETOR
+
+insert into funcionario_diretor(cpf_funcionario, nome_universidade, data_de_posse, fim_da_posse) values (12345, 'IFPE', '12/01/2012', '12/01/2022');
+insert into funcionario_diretor(cpf_funcionario, nome_universidade, data_de_posse, fim_da_posse) values (12555, 'Mauricio de Nassau', '20/02/2015', '20/02/2025');
+
+-- INSERT FUNCIONARIOS
+
+insert into funcionario (cpf, nome, salario,  email, estado, cidade, rua, numero_de_registro, login, senha, dig) values (12555,	'Maria Espedita', 3600.00, 'mariae@gmail.com', 'PE', 'Belo Jardim',	'Rua da Porca',	7453,	'maria', '1423', 11),
+(13355,	'Gleidson Souza',	850.00,	'gleidson@gmail.com',	'PE',	'Buíque',	'Vila Nova',	66453,	'gleid',	'0023',	11),
+(13375,	'Emerson Sirino',	1750.00,	'emersons@gmail.com',	'SP',	'São Paulo',	'Brás',	123453,	'emerson',	'8970',	11),
+(45665,	'Marcos Castro',	4550.00,	'marcos@outlook.com',	'SP',	'Paulista',	'Rua 8',	885,	'marcos',	'1234',	11),
+(51907,	'Felipe Godoi',	5050.00,	'felipe@gmail.com',	'PE',	'Pesqueira',	'Rua dez',	745,	'felipe',	'1299',	11),
+(51998,	'Andre aaa',	1050.00,	'felipe@uol.com',	'BH',	'Belo Horizonte',	'Rua 9',	445,	'Andre',	'1234',	13),
+(56987,	'Joal Aumerio',	1350.00,	'joal@gmail.com',	'PE',	'Belo Jardim',	'Rua Oito',	56745,	'joao',	'123',	11),
+(73475,	'Paulo Meira',	1600.00,	'paulom@gmail.com',	'RJ',	'Rio de Janeiro',	'Copacabana',	999453,	'paulo',	'6520',	11),
+(12345, 'João Mario', 1200.00, 'jmario@gmail.com','PE', 'Pesqueira', 'Rua da Poça', 1587453, 'mario', '123', 11),
+(56987, 'Joal Aumerio', '1350.00',  'joal@gmail.com', 'PE', 'Pesqueira', 'Rua dez', '00745', 'joao', '123', 11),
+(51907, 'Felipe Godoi', '5050.00',  'felipe@gmail.com', 'PE', 'Pesqueira', 'Rua dez', '00745', 'felipe', '1299', 11),
+(51998, 'Andre aaa', '1050.00',  'felipe@uol.com', 'BH', 'Belo Horizonte', 'Rua 9', '00445', 'Andre', '1234', 13),
+(45665, 'Marcos Castro', '4550.00',  'marcos@outlook.com', 'SP', 'Paulista', 'Rua 8', '00885', 'marcos', '1234', 11);
+
+
+-- INSERT TELEFONES DOS FUNCIONARIOS
+insert into telefones_funcionario(cpf_funcionario, telefone) VALUES(51998, 8574522854);
+insert into telefones_funcionario(cpf_funcionario, telefone) VALUES(45665, 6259988998);
+insert into telefones_funcionario(cpf_funcionario, telefone) VALUES(51998, 6515188849),
+(12345,	87965847),
+(12555,	87125807),
+(13355,	89125337),
+(13375,	88145037),
+(73475,	81172017);
+
+-- INSERT ALUNO CURSA DISCIPLINA
+insert into ALUNO_CURSA_DISCIPLINA (MATRICULA_ALUNO, ID_DISCIPLINA) VALUES (123, 12365),
+(133,	25874),
+(144,	25874),
+(166,	25874),
+(666,	12365);
+
+-- INSERT DISCIPLINAS
+
+INSERT INTO DISCIPLINA (ID, NOME, ID_CURSO) VALUES (25874,	'Matemática',		1),
+(12365,	'Português',		2);
+
+
+--Testes usando o select--
+SELECT *
+FROM aluno 
+
+SELECT *
+FROM curso 
+
+SELECT *
+FROM funcionario 
+
+SELECT *
+FROM universidade 
+
+SELECT *
+FROM setor
+
+SELECT *
+FROM disciplina
+
+SELECT *
+FROM universidade
+
+SELECT *
+FROM funcionario_professor 
+
+SELECT *
+FROM funcionario_diretor
+
+SELECT *
+FROM funcionario_coordenador
+
+SELECT *
+FROM funcionario_secretario
+
+SELECT *
+FROM aprendiz
+
+SELECT *
+FROM aluno_cursa_disciplina
+
+SELECT *
+FROM telefones_aluno
+
+SELECT *
+FROM telefones_funcionario
+
+SELECT *
+FROM funcionario_diretor
+
+SELECT *
+FROM funcionario_secretario
+
+--Listar nome e sexo dos alunos que moram no estado da Bahia.
+
+SELECT nome, sexo 
+FROM aluno 
+WHERE estado = 'BA';
+
+--Listar os alunos e o numero da matricula maior que 175.
+
+SELECT nome, matricula 
+FROM aluno 
+WHERE matricula > 175;
+
+--Listar o estado e o nome dos alunos que não moram em ‘AL’, ordenando o resultado de forma decrescente por nome do aluno.
+
+SELECT nome, estado 
+FROM aluno 
+WHERE estado != 'AL'
+ORDER BY nome DESC;
+
+--Listar todos os dados dos alunos cujos nomes são terminados por ‘va’.
+
+SELECT *
+FROM aluno 
+WHERE nome LIKE '%va';
+
+--Listar todos os dados dos alunos do sexo masculino que tenham em qualquer parte do nome a letra ‘o’.
+
+SELECT *
+FROM aluno 
+WHERE sexo = 'M' and nome LIKE '%o%';
+
+--Listar todos os dados dos funcionários do sexo masculino que não tenham em qualquer parte do nome a letra ‘o’.
+
+SELECT *
+FROM aluno 
+WHERE sexo = 'M' and nome NOT LIKE '%o%';
+
+--Listar todos os dados dos alunos que tenham sua matricula num valor entre 160 e 170, ordenando o resultado de forma crescente por numero da matricula.
+
+
+SELECT *
+FROM aluno 
+WHERE matricula
+BETWEEN 160 AND 170
+ORDER BY matricula ASC;
+
+--Listar os alunos que não são dos estados do Nordeste.
+
+SELECT *
+FROM aluno 
+WHERE estado NOT IN ('PE','AL','BA','RN','PI','SE','CE','MA','PB');  
+
+--Listar o numero maior entre as matricula dos alunos do sexo feminino.
+
+SELECT nome, salario AS maior_salario_funcionarios_de_belo_jardim
+FROM funcionario
+WHERE cidade = 'Belo Jardim'
+AND salario = (SELECT MAX(salario) FROM funcionario);
+
+--Listar a menor matricula dos alunos do estado de Pernambuco.
+
+SELECT MIN(matricula) AS Menor_numero_matricula_Pernambuco
+FROM aluno
+WHERE estado = 'PE';
+
+--Listar a média do número da matricula.
+
+SELECT AVG(matricula) AS Média_matricula 
+FROM aluno;
+
+--Listar a média das matriculas dos alunos do sexo masculino, do estado de Pernamuco.
+
+SELECT AVG(matricula) AS Média_matricula_masculino
+FROM aluno
+WHERE sexo = 'M' and estado = 'PE';
+
+--Listar o total de aluno com numero da matricula abaico de 170.
+
+SELECT *
+FROM aluno
+WHERE matricula < 170;
+
+--Listar as cidades distintas dos alunos.
+
+SELECT DISTINCT cidade AS cidades_distintas
+FROM aluno;
+
+--Listar o total de cidades distintas dos alunos.
+
+SELECT COUNT(DISTINCT cidade) AS total_cidades_distintas
+FROM aluno;
+
+--Listar o nome do aluno com maior número da matricula.
+
+SELECT nome,matricula
+FROM aluno
+WHERE matricula = (SELECT MAX(matricula) FROM aluno);
+
+--Listar o nome do funcionário com menor número da matricula.
+
+SELECT nome,matricula
+FROM aluno
+WHERE matricula = (SELECT MIN(matricula) FROM aluno);
+
+--Listar os alunos que tenha o número da matricula acima da média do números de matricula
+
+SELECT nome, matricula
+FROM aluno
+WHERE matricula > (SELECT AVG(matricula) FROM aluno);
+
+
+-- Uso de Select com Junções --
+
+SELECT f.nome, tf.telefone, f.email, f.estado
+FROM funcionario f, telefones_funcionario tf
+WHERE f.cpf = tf.cpf_funcionario
+AND email LIKE ('%@gmail.com')
+AND estado <> 'PE'
+ORDER BY nome ASC;
+
+-- Select com aluno_cursa_disciplina --
+
+SELECT a.nome, d.nome, c.nome
+FROM aluno a, disciplina d, aluno_cursa_disciplina acd, curso c
+WHERE a.matricula = acd.matricula_aluno
+AND d.id = acd.id_disciplina
+AND c.id = d.id_curso;
+
+-- Select Funcionário direto com o professor pediu
+
+SELECT f.nome, f.email, fd.nome_universidade, fd.data_de_posse
+FROM funcionario f, funcionario_diretor fd
+WHERE f.cpf = fd.cpf_funcionario;
+
+-- Uso de Group By --
+
+SELECT sexo, COUNT(matricula)
+FROM aluno
+GROUP BY sexo;
+
+-- Uso de Group By com Having --
+
+SELECT cidade, COUNT(matricula)
+FROM aluno
+GROUP BY  cidade
+HAVING cidade != 'Caruaru';
+
+-- Media salarial por cidade --
+
+SELECT cidade, AVG(salario)
+FROM funcionario
+GROUP BY  cidade;
+
+-- Quantas pessoas recebem salario por cidade --
+
+SELECT cidade, COUNT(salario)
+FROM funcionario
+GROUP BY  cidade
+ORDER BY count(salario);
+
+-- pessoa com o maior salario por cidade acima de 2000 --
+
+SELECT cidade, MAX(salario)
+FROM funcionario
+GROUP BY  cidade
+HAVING MAX(salario)  > 2000
+ORDER BY MAX(salario);

@@ -1,0 +1,56 @@
+CREATE TABLE departamentos (
+
+    codigo NUMBER(5),
+    nome varchar2(50) NOT NULL
+        CHECK (nome IN ('financeiro', 'recursos humanos', 'comercial', 'outro')),
+    andar number(2)
+        CHECK ( andar BETWEEN 1 and 30),
+    orcamento NUMBER(20, 2),
+        PRIMARY KEY (codigo)
+)
+select * from departamentos;
+
+/* ABAIXO TESMOS UM EXEMPLO DE RESTRIÇÃO DE DOMININIO, POIS O ATRIBUTO NOME NÃO ACEITA OUTRO QUE NÃO FOI ESPEFICIADO PELO CHECK */
+INSERT INTO departamentos (codigo, nome, andar, orcamento) VALUES (1, 'recursos humanos', 2, 14500);
+INSERT INTO departamentos (codigo, nome, andar, orcamento) VALUES (1, 'RH', 2, 14500);
+
+/* ABAIXO TESMOS UM EXEMPLO DE RESTRIÇÃO DE ENTIDADE, NO CÓDIGO NÃO É POSSÍVEL COLOCAR VALORES NULL*/
+INSERT INTO departamentos (codigo, nome, andar, orcamento) VALUES (null, 'recursos humanos', 2, 14500);
+
+/* ABAIXO TEMOS UM ERRO DE RESTRIÇÃO DE CHAVE, JÁ EXISTE UM DEPARMENTO COM O MESMO CÓDIGO, PORTANTO NÃO É POSSÍVEL GERAR UM NOVO, ISSO É CAUSADO PELA PRIMARY KEY*/
+INSERT INTO departamentos (codigo, nome, andar, orcamento) VALUES (2, 'comercial', 3, 16300); -- CERTO
+INSERT INTO departamentos (codigo, nome, andar, orcamento) VALUES (2, 'comercial', 3, 16300); -- ERRADO, POR REPETIÇÃO
+
+
+CREATE TABLE empregado (
+    matricula   NUMBER(5) NOT NULL UNIQUE,
+    codigo_depto    NUMBER(5),
+    nome    VARCHAR2(70) NOT NULL,
+    idade   NUMBER(3) NOT NULL,
+        CHECK ( idade BETWEEN 16 AND 90),
+    salario NUMBER(8,2)
+        CHECK (salario > 0),
+        FOREIGN KEY (codigo_depto) REFERENCES departamentos (codigo)
+)
+
+/* ABAIXO TEMOS UM ERRO DE RESTRIÇÃO DE INTEGRIDADE REFERENCIAL, NA PASSAGEM DE VALOR DA CHAVE ESTRANGEIRA NÃO FOI PASSADO CORRETAMENTE O ARGUMENTO DE CHAVE PRIMARIA DA 
+TABELA DEPARTAMENTOS,PORTANTO DESOBEDECE A RESTRIÇÃO DE INTEGRIDADE REFERENCIAL, QUE ESTABELE UM RELAÇÃO ENTRE AS DUAS TABELAS*/
+INSERT INTO empregado (matricula, codigo_depto, nome, idade, salario) VALUES (12345, 45930, 'Augusto Ferreira', 23, 3.500);
+
+/* ABAIXO TESMOS UM EXEMPLO DE RESTRIÇÃO DE DOMININIO, POIS O ATRIBUTO NOME NÃO ACEITA OUTRO QUE NÃO FOI ESPEFICIADO PELO CHECK */
+INSERT INTO empregado (matricula, codigo_depto, nome, idade, salario) VALUES (12345, 1, 'Augusto Ferreira', 10, 3.500);
+
+/* ABAIXO TESMOS UM EXEMPLO DE RESTRIÇÃO DE ENTIDADE, NO CÓDIGO NÃO É POSSÍVEL COLOCAR VALORES NULL*/
+INSERT INTO empregado (matricula, codigo_depto, nome, idade, salario) VALUES (null, 1, 'Augusto Ferreira', 25, 3.500);
+
+/* ABAIXO TEMOS UM ERRO DE RESTRIÇÃO DE CHAVE, JÁ EXISTE UM DEPARMENTO COM O MESMO CÓDIGO, PORTANTO NÃO É POSSÍVEL GERAR UM NOVO, ISSO É CAUSADO PELA PRIMARY KEY*/
+INSERT INTO empregado (matricula, codigo_depto, nome, idade, salario) VALUES (12345, 1, 'Augusto Ferreira', 25, 3.500); -- CERTO
+INSERT INTO empregado (matricula, codigo_depto, nome, idade, salario) VALUES (12345, 1, 'Augusto Ferreira', 25, 3.500); -- ERRADO, POR REPETIÇÃO.
+
+
+
+
+select * from empregado;
+
+
+        

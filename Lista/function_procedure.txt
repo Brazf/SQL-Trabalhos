@@ -1,0 +1,196 @@
+-- CRIAÇÃO DA FUNCTION
+CREATE OR REPLACE function somar (valor1 in number, valor2 in number)
+RETURN integer
+IS
+BEGIN
+ return (valor1+valor2);
+END;
+
+-- SELECT FUCTION
+SELECT somar(10, 20) FROM dual;
+
+-- DELETAR FUNCTION
+
+DROP function somar;
+
+/*Criar uma function que retorne a terça parte de um número*/
+
+CREATE OR REPLACE function tercaParte (valor in number)
+RETURN number
+IS
+BEGIN
+    return (valor / 3);
+END;
+
+/* mostrando resultado da terca parte */
+
+SELECT tercaParte(5) FROM dual;
+
+/*Criar uma function que retorne o valor em dólar,
+dada a cotação do dólar e o valor em reais*/
+CREATE OR REPLACE function valorEmDolar (reais in number, cotacao in number)
+RETURN number
+IS
+
+BEGIN
+return (reais / cotacao);
+END;
+
+/* drop function valorEmDolar */
+
+drop function valorEmDolar;
+
+/* function retorno valor em dolar */
+
+SELECT ValorEmDolar(5, 5.28) FROM dual;
+
+/*Criar uma function que retorne o IMC de uma
+dada pessoa, dado seu peso e altura*/
+
+CREATE OR REPLACE function calcularIMC (peso in number, altura in number)
+RETURN number
+IS
+
+BEGIN 
+    RETURN (peso/(altura*altura));
+END;
+
+/*Remover a function calculaIMC*/
+
+DROP function calculaIMC;
+
+/* EXIBINDO IMC */
+
+SELECT calcularIMC(56, 1.67) FROM dual;
+
+/* PROCEDURES - AUMENTO SALARIAL */
+
+CREATE TABLE funcionario (
+    cpf integer,
+    nome varchar(70),
+    salario number,
+    PRIMARY KEY(cpf)
+)
+
+-- INSERT table funcionario 
+INSERT into funcionario values (12345,'Fábio Braz',2500);
+-- select table
+SELECT * FROM FUNCIONARIO;
+
+-- PROCEDURA AUMENTO SALARIAL 
+CREATE OR REPLACE procedure aumentoSalarial(percentual in number)
+
+IS
+BEGIN
+    update funcionario set salario = salario*(1 + (percentual / 100));
+END;
+
+EXEC aumentoSalarial(10);
+
+
+-- DELETAR PROCEDURE
+
+DROP procedure aumentoSalarial;
+
+/*Criar uma procedure para dar desconto no preço
+dos cursos*/
+
+/* TABLE CURSO */
+CREATE TABLE curso (
+    nome varchar(70) PRIMARY KEY,
+    preco integer
+)
+
+-- INSERT CURSO
+INSERT INTO curso values ('Engenharia de Software', 400);
+-- SELECT CURSO
+
+SELECT * FROM CURSO;
+
+-- PROCEDURE PARA DESCONTO NO PRECO DO CURSO
+
+CREATE OR REPLACE procedure descontoNoCurso (percentual in number)
+IS
+BEGIN
+    UPDATE curso SET preco = preco * (1- (percentual/100));
+END;
+
+EXEC descontoNoCurso(10);
+
+-- DELETAR PROCEDURE
+
+DROP procedure descontoNoCurso;
+
+/*Criar uma procedure para inserir, alterar ou
+excluir dados na tabela cidade*/
+
+-- CRIAÇÃO DA TABLE CIDADE
+CREATE TABLE CIDADE
+(
+    COD_CIDADE INTEGER NOT NULL,
+    NOME VARCHAR2(100),
+    UF CHAR(2)
+);
+
+-- SELECT CIDADE
+
+SELECT * FROM CIDADE;
+
+-- segundo, o código para criação da procedure
+
+CREATE OR REPLACE procedure OP_CIDADE 
+(
+    vCOD_CIDADE integer,
+    vNOME varchar2,
+    vUF char,
+    vOPR char
+)
+
+IS
+    vEXCEPTION EXCEPTION;
+BEGIN
+    IF (vOPR = 'I') THEN
+        INSERT INTO CIDADE(COD_CIDADE, NOME, UF) VALUES (vCOD_CIDADE, vNOME, vUF);
+    ELSE
+
+    IF(vOPR = 'A') THEN
+        UPDATE CIDADE SET NOME = vNOME, UF = vUF WHERE COD_CIDADE = vCOD_CIDADE;
+    ELSE
+
+    IF(vOPR = 'D') THEN
+        DELETE FROM CIDADE WHERE COD_CIDADE = vCOD_CIDADE;
+    ELSE
+
+    RAISE vEXCEPTION;
+        END IF; END IF; END IF;
+        EXCEPTION
+            WHEN vEXCEPTION THEN
+                RAISE_APPLICATION_ERROR(-20999,'ATENÇÃO! Operação diferente de I, D, A.', FALSE);
+    END OP_CIDADE;
+    
+-- por fim, executando a procedure opCidade
+
+EXEC OP_CIDADE(1, 'Recife','PE','I'); -- inserindo uma tupla na tabela cidade
+
+EXEC OP_CIDADE(2, 'São Paulo','SP','I'); -- inserindo uma tupla na tabela cidade
+
+EXEC OP_CIDADE(3, 'Santos' ,'SP','I'); -- inserindo uma tupla na tabela cidade
+
+
+-- SELECT CIDADE
+
+SELECT * FROM CIDADE;
+
+
+-- por fim, executando a procedure opCidade
+
+EXEC OP_CIDADE(1, 'Caruaru','PE','A'); -- atualizando uma tupla na tabela cidade
+
+EXEC OP_CIDADE(1, 'Caruaru','PE','D'); -- deletando uma tupla da tabela cidade
+
+EXEC OP_CIDADE(5, 'Sanharó','PE','X'); -- exception emite mensagem de erro
+
+
+-- SELECT CIDADE
+
+SELECT * FROM CIDADE;

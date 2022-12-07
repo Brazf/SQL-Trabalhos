@@ -1,0 +1,57 @@
+--a) Criar as tabelas acima, e seus dados respectivos, conforme as imagens acima
+CREATE TABLE filmes(
+	cd_filmes SERIAL PRIMARY KEY,
+	cd_gen int,
+	ds_titulo varchar(70),
+	nm_ano_lancamento int,
+	nm_arrecadacao numeric(10,2),
+	FOREIGN KEY (cd_gen) REFERENCES generos(cd_gen)
+);
+
+CREATE TABLE generos(
+	cd_gen SERIAL PRIMARY KEY,
+	ds_gen varchar(70)
+);
+
+SELECT * FROM FILMES;
+SELECT * FROM GENEROS;
+
+INSERT INTO generos (ds_gen) values ('Aventura'), ('Terror'),('Romance'),('Suspense'),('Comédia');
+
+INSERT INTO filmes (cd_gen, ds_titulo, nm_ano_lancamento, nm_arrecadacao) values (1, 'Homem Aranha', 2020,3200000.50),
+(3, 'Lendas da Paixão', 2018,500000.80),(2, 'Drácula', 2005,150000.00),(2, 'O Porão', 2021,100000.90),
+(4, 'Os outros', 2016,60000.70),(1, 'Adrenalina', 2020,340000.00);
+
+-- b) Listar os filmes em ordem alfabética.
+SELECT * FROM FILMES ORDER BY ds_titulo ASC;
+--c) Listar os filmes em ordem decrescente de arrecadação.
+SELECT * FROM FILMES ORDER BY nm_arrecadacao DESC;
+--d) Listar os anos de lançamento distintos dos filmes.
+SELECT DISTINCT(nm_ano_lancamento) FROM FILMES;
+--e) Listar a maior arrecadação dos filmes.
+SELECT MAX(nm_arrecadacao) AS VALOR_DO_FILME_DE_MAIOR_ARRECADACAO FROM FILMES;
+--f) Listar a menor arrecadação dentre os filmes de aventura
+SELECT MIN(nm_arrecadacao) AS FILME_MENOR_ARRECADACAO_ENTRE_AVENTURA 
+FROM FILMES
+WHERE cd_gen = '1';
+--h) Listar o total de filmes do gênero aventura.
+SELECT COUNT(cd_gen)
+FROM FILMES
+WHERE cd_gen = '1';
+--i) Listar o nome do filme de maior arrecadação.
+SELECT ds_titulo
+FROM FILMES
+WHERE nm_arrecadacao = (SELECT MAX(nm_arrecadacao) FROM FILMES);
+--j) Listar o nome do filme lançado mais recentemente.
+SELECT ds_titulo, nm_ano_lancamento
+FROM FILMES
+WHERE nm_ano_lancamento = (SELECT min(nm_ano_lancamento) FROM FILMES);
+--k) Utilizando junção de tabelas, listar os nomes dos filmes, e seus respectivos gêneros
+SELECT f.ds_titulo,g.ds_gen
+FROM filmes f,generos g
+WHERE f.cd_gen = g.cd_gen;
+--l) Utilizando junção de tabelas, listar os nomes dos filmes de Terror
+SELECT f.ds_titulo,g.ds_gen
+FROM filmes f,generos g
+WHERE f.cd_gen = g.cd_gen
+AND g.ds_gen = 'Terror';

@@ -1,0 +1,134 @@
+create table vendedor (
+    codigo integer PRIMARY KEY,
+    nome varchar(70),
+    idade integer,
+    tempoDeCasa integer,
+    estado char(2),
+    cidade varchar(70),
+    sexo char(1),
+    salario integer,
+    id_departamento integer,
+    FOREIGN KEY (id_departamento) REFERENCES departamento (id)
+);
+
+insert into vendedor values (1, 'Fábio', 25, 4,'PE', 'Buíque', 'M', 1500, 001);
+insert into vendedor values (2, 'Ricardo', 19, 5,'PE', 'Pesqueira', 'M', 500, 004);
+insert into vendedor values (3, 'José', 20, 8,'PE', 'Buíque', 'M', 3500, 001);
+insert into vendedor values (4, 'Carla', 22, 10,'RJ', 'Rio de Janeiro', 'F', 5000, 004);
+insert into vendedor values (5, 'Ana', 35, 2,'BA', 'Salvador', 'F', 3200, 001);
+insert into vendedor values (6, 'Mariza', 27, 5,'RJ', 'Rio de Janeiro', 'F', 7600, 003);
+insert into vendedor values (7, 'Andre', 89, 25,'PB', 'João Pessoa', 'M', 700, 002);
+insert into vendedor values (8, 'Amanda', 22, 10,'SP', 'São Paulo', 'F', 5300, 001);
+insert into vendedor values (9, 'Gilza', 56, 30,'SP', 'São Paulo', 'F', 1400, 001);
+insert into vendedor values (10, 'Fernando', 45, 8,'PE', 'Caruaru', 'M', 1800, 002);
+insert into vendedor values (11, 'Fernando Silva Henrique', 45, 8,'PE', 'Caruaru', 'M', 1800, 003);
+ 
+select * from vendedor;
+
+--/Criar uma view que liste os vendedores da com salario entre 1000 e 2000 reais/
+CREATE VIEW vSalarioMedio AS
+SELECT nome, salario
+FROM vendedor
+WHERE SALARIO BETWEEN 1000 AND 2000;
+
+SELECT *
+FROM vSalarioMedio;
+
+
+--/Criar uma view que liste o nome do vendedor com a maior idade/
+CREATE VIEW vMaiorIdade AS
+SELECT nome, idade
+FROM vendedor
+WHERE idade = (SELECT MAX(idade) from vendedor);
+
+select *
+from vMaiorIdade;
+
+--/Criar uma view que liste o nome do vendedor com menor tempo de casa/
+CREATE VIEW vMenorTempoDeCasa AS
+SELECT nome, tempoDeCasa
+FROM vendedor
+WHERE tempoDeCasa = (SELECT MIN(tempoDeCasa) from vendedor);
+
+select *
+from vMenorTempoDeCasa;
+
+-- /Criar uma view que liste a média salarial dos vendedores agrupados por estado/--
+CREATE VIEW vMediaSalarial AS
+SELECT AVG(salario) as media,estado
+FROM vendedor
+GROUP BY estado;
+
+SELECT *
+from vMediaSalarial ;
+
+--/Criar uma view que liste os vendedores que sejam do Nordeste/
+CREATE VIEW vVendedoresNordeste AS
+SELECT *
+FROM vendedor
+WHERE ESTADO IN ('PE', 'PB', 'AL', 'SE', 'RN', 'MA', 'BA', 'PI', 'CE');
+
+select *
+from vVendedoresNordeste;
+
+-- /Criar uma view que liste os vendedores que sejam da família Silva/
+
+CREATE VIEW vFamiliaSilva AS
+SELECT *
+FROM vendedor
+WHERE nome LIKE ('%Silva%');
+
+SELECT *
+FROM vFamiliaSilva;
+
+
+-- USER VIEWS
+select * from user_views;
+
+-- tabela departamento --
+
+CREATE TABLE departamento
+(
+    id INTEGER PRIMARY KEY,
+    nome varchar(70)
+);
+
+insert into departamento values (001, 'Logistica');
+insert into departamento values (002, 'Financeiro');
+insert into departamento values (003, 'Administrativo');
+insert into departamento values (004, 'Recursos Humanos');
+
+select * from departamento;
+-- tabela telefones
+
+create table telefone (
+    num INTEGER PRIMARY KEY,
+    codigo INTEGER,
+    FOREIGN KEY (codigo) REFERENCES vendedor (codigo)    
+);
+
+insert into telefone values (87999975, 1);
+insert into telefone values (87995477, 2);
+insert into telefone values (81985225, 3);
+insert into telefone values (87325475, 4);
+insert into telefone values (81897422, 5);
+insert into telefone values (87852147, 6);
+insert into telefone values (87965841, 7);
+insert into telefone values (81987456, 8);
+insert into telefone values (87963254, 9);
+insert into telefone values (87987451, 10);
+insert into telefone values (87965874, 11);
+
+
+select * from telefone;
+-- user-views --
+select * from user_views;
+
+-- Consulta Junção --
+
+CREATE VIEW vNumeroVendedores as
+select v.nome, t.num
+from vendedor v, telefone t
+where v.codigo = t.codigo;
+
+select * from vNumeroVendedores;

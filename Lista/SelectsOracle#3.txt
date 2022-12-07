@@ -1,0 +1,75 @@
+create table carros
+(
+    chassi INTEGER PRIMARY KEY,
+    fabricante VARCHAR(30),
+    nome VARCHAR(30),
+    ano_fabricacao INTEGER,
+    cor VARCHAR(20),
+    portas INTEGER
+);
+
+drop table carros;
+
+INSERT INTO carros VALUES (12323, 'Fiat', 'Marea', 1997, 'vermelho', 4);
+INSERT INTO carros VALUES (12003, 'Fiat', 'Uno', 2012, 'preto', 2);
+INSERT INTO carros VALUES (18723, 'Volkswagem', 'Gol', 2015, 'vermelho', 4);
+INSERT INTO carros VALUES (16323, 'Renault', 'Sandero', 2018, 'prata', 2);
+INSERT INTO carros VALUES (19873, 'Volkswagem', 'Fox', 2016, 'branco', 4);
+INSERT INTO carros VALUES (19073, 'Volkswagem', 'Brasília', 1997, 'amarelo', 2);
+
+--select todos os carros --
+select * from carros;
+
+--select nome dos carros --
+SELECT nome 
+FROM carros;
+
+--select carros da cor "vermelho"--
+SELECT fabricante, nome, cor
+FROM carros
+WHERE cor = 'vermelho';
+
+--select carros com 4 portas e os nomes em ordem crescente --
+SELECT fabricante, nome
+FROM carros
+WHERE portas = 4
+ORDER BY NOME ASC;
+
+--select carros que começam com a letra "f"--
+
+SELECT fabricante, nome
+FROM carros
+WHERE nome LIKE 'F%';
+
+--select carros que contém a letra "E" no nome--
+
+SELECT fabricante, nome
+FROM carros
+WHERE nome LIKE '%e%';
+
+--select carros que terminam com a letra "A" no fim do nome--
+
+SELECT fabricante, nome
+FROM carros
+WHERE nome LIKE '%a';
+
+--select carros que foram fabricados em determinado ano--
+SELECT fabricante, nome, ano_fabricacao
+FROM carros
+WHERE  ano_fabricacao IN '1997';
+
+--select fabricante distintos--
+SELECT DISTINCT(fabricante)
+FROM carros;
+
+
+--select quantidade de carros fabricados pelo nome --
+SELECT nome, COUNT(nome)
+FROM carros
+GROUP BY nome;
+
+-- quantidade de carros fabricados por cada fabricante--
+SELECT fabricante, COUNT(fabricante)
+FROM carros
+GROUP BY fabricante;
+

@@ -1,0 +1,76 @@
+-- tabelas --
+CREATE TABLE livros(
+	id_filme integer PRIMARY KEY,
+	id_genero integer,
+	nome_titulo varchar(70),
+	ano_lancamento integer,
+	FOREIGN KEY (id_genero) REFERENCES generos(id_genero)
+);
+
+drop table livros;
+
+CREATE TABLE generos(
+	id_genero integer PRIMARY KEY,
+	nome_genero varchar(70)
+);
+
+drop table generos;
+
+-- inserts --
+INSERT INTO generos values (1, 'Literatura');
+INSERT INTO generos values (2, 'Autoajuda');
+INSERT INTO generos values (3, 'Romance');
+INSERT INTO generos values (4, 'ficção');
+INSERT INTO generos values (5, 'Religião');
+
+INSERT INTO livros values (1, 1, 'O Homem mais Rico do Mundo', 2020);
+INSERT INTO livros values (2, 3, 'Amor Eterno', 2018);
+INSERT INTO livros values (3, 2, 'Como Viver Bem', 2005);
+INSERT INTO livros values (4, 2, 'O Ensinamento', 2021);
+INSERT INTO livros values (5, 4, 'Astrologia dos Universos', 2016);
+INSERT INTO livros values (6, 5, 'Deus é bom!', 2020);
+INSERT INTO livros values (7, 1, 'Oceano de letras', 2017);
+
+-- selects --
+
+SELECT * FROM livros;
+SELECT * FROM generos;
+
+-- ordernar livros por nome --
+SELECT * FROM livros ORDER BY nome_titulo ASC;
+
+-- ornderar os livros em ordem decrescente
+SELECT * FROM livros ORDER BY nome_titulo DESC;
+
+-- nomes do livros por ano de lançamento distintos.
+SELECT DISTINCT(ano_lancamento) FROM livros;
+
+-- lançamento mais recente dos livros --
+SELECT MAX(ano_lancamento) as ano_do_livros_mais_novo
+FROM livros;
+
+-- livro mais velho dentro dos livros de aventura --
+SELECT MIN(ano_lancamento) as ano_livro_mais_velho_aventura
+FROM livros
+WHERE id_genero = '1';
+
+-- mostrar todos os livros do gênero literatura --
+SELECT COUNT(id_genero) as quantidade_livros_de_literatura
+FROM livros
+WHERE id_genero = '1';
+
+-- exibir o nome do livro lançado mais antigo--
+SELECT nome_titulo, ano_lancamento
+FROM livros
+WHERE ano_lancamento = (SELECT min(ano_lancamento) FROM livros);
+
+-- exibir os nomes dos livros e seus gêneros "Usando Junção"-- 
+SELECT l.nome_titulo, g.nome_genero
+FROM livros l,generos g
+WHERE l.id_genero = g.id_genero;
+
+-- exibir os nomes dos livros de Autoajuda "Usando Junção" --
+SELECT l.nome_titulo,g.nome_genero
+FROM livros l,generos g
+WHERE l.id_genero = g.id_genero
+AND g.nome_genero = 'Autoajuda';

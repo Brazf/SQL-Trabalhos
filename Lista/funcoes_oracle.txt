@@ -1,0 +1,146 @@
+-- TABLE PRODUTO --
+CREATE TABLE produto (
+    codigo integer PRIMARY KEY,
+    nome varchar(70),
+    marca varchar(70),
+    preco float,
+    quantidade integer
+)
+select * from produto;
+
+-- INSERT'S PRODUTO--
+
+insert into produto values (001, 'Camisa', 'Adidas', 145.52, 8);
+insert into produto values (002, 'Tênis', 'Adidas', 220.13, 15);
+insert into produto values (003, 'Camisa', 'Nike', 350.20, 10);
+insert into produto values (004, 'Boné', 'Lacoste', 80.96, 20);
+insert into produto values (005, 'Relógio', 'Oriente', 950.08, 5);
+
+-- TABLE CURSO --
+CREATE TABLE curso (
+    codigo integer PRIMARY KEY,
+    nome varchar(70),
+    valor float
+)
+select * from curso;
+
+-- INSERT'S CURSO --
+
+insert into curso values (111, 'Engenharia de Software', 800.00);
+insert into curso values (222, 'Educação Física', 520.00);
+insert into curso values (333, 'Biologia', 350.00);
+insert into curso values (444, 'Matemática', 280.00);
+insert into curso values (555, 'Medicina', 1550.00);
+
+-- TABLE INSTRUTOR --
+CREATE TABLE instrutor (
+    codigo integer PRIMARY KEY,
+    nome varchar(70),
+    telefone varchar(12),
+    email varchar(70)
+)
+select * from instrutor;
+
+-- INSERT'S INSTRUTOR --
+
+insert into instrutor values (11, 'José Alberto', '879986541', 'jose@gmail.com');
+insert into instrutor values (12, 'Adriano Souza', '879900571', 'adriano@gmail.com');
+insert into instrutor values (13, 'Amanda Santos', '896586521', 'amanda@hotmail.com');
+insert into instrutor values (14, 'Thais America', '878416541', 'thaisamerica@hotmail.com');
+insert into instrutor values (15, 'Alice Medeiros', '889986501', 'alicem@outlook.com');
+insert into instrutor values (16, 'Roberto Costa', null, 'berto@outlook.com');
+insert into instrutor values (17, 'Tarcicio Meira', null, 'tarci@outlook.com');
+
+-- USANDO FUNÇÕES NAS TABELAS --
+
+-- LOWER, UPPER, INITCAP --
+SELECT LOWER(nome) "letras_minusculas", UPPER(nome) "LETRAS_MAIUSCULAS", INITCAP(nome) "letras_minusculas_e_maiusculas"
+FROM instrutor;
+
+-- LENGTH --
+SELECT email, LENGTH(email) "Tamanho_do_email"
+FROM instrutor;
+
+-- REPLACE -- 
+SELECT nome, REPLACE(nome, 'Camisa', 'Moleton') "NOVO NOME DO PRODUTO"  
+FROM  produto
+WHERE nome LIKE '%Camisa%';
+
+-- CONTACT -- 
+SELECT CONCAT( nome, CONCAT(' = Valor do curso: ', valor)) "NOME DO CURSO E VALOR"
+FROM curso;
+
+-- SQRT --
+
+SELECT CONCAT( nome, CONCAT(' = Valor do curso: ', SQRT(valor))) "VALOR DA RAIZ QUADRADA DE CADA CURSO"
+FROM curso;
+
+-- POWER --
+
+SELECT CONCAT( nome, CONCAT(' = Valor do curso: ', SQRT(valor))) "VALOR QUADRADO DE CADA CURSO"
+FROM curso;
+
+-- ROUND -- 
+
+SELECT preco, ROUND(preco, 1)"VALOR SERÁ ARREDONDA À PRIMEIRA CASA DECIMAL"
+FROM produto;
+
+-- CEIL --
+
+SELECT preco, CEIL(preco)"VALOR SERÁ ARREDONDA PARA CIMA"
+FROM produto;
+
+-- FLOOR --
+
+SELECT preco, FLOOR(preco) "VALOR SERÁ ARREDONDA PARA BAIXO"
+FROM produto;
+
+-- SYSDATE -- 
+
+SELECT SYSDATE "DATA_ATUAL_DO_SERVIDOR"
+FROM dual;
+
+-- CURRENT_DATE -- 
+
+SELECT CURRENT_DATE "DATA_CORRENTE_DA_SESSÃO"
+FROM dual;
+
+-- EXTRATC -- 
+
+SELECT nome, EXTRACT(year from date '2022-10-01') "EXTRAÇÃO DE UMA SESSÃO ESPECIFICA DA DATA"
+FROM instrutor;
+
+-- NEXT_DAY --
+
+SELECT NEXT_DAY('01/08/1997', 'segunda') "Data da próxima segunda-feira"
+FROM dual;
+
+-- LAST_DAY --
+
+SELECT LAST_DAY('01/08/1997') "Último dia do mês"
+FROM dual;
+
+-- TO_DATE --
+
+SELECT SYSDATE
+FROM DUAL
+WHERE SYSDATE>TO_DATE('27/09/2022','dd-mm-yyyy');
+
+-- TO_CHAR --
+
+SELECT nome, TO_CHAR(valor, '9,999.99') "valor do curso formatado"
+FROM curso;
+
+-- NVL -- 
+
+SELECT nome, NVL(telefone, 'SEM NÚMERO') "VALORES NULOS RECEBEM UMA MENSAGEM"
+FROM instrutor;
+
+-- TO_NUMBER -- 
+
+
+SELECT nome, TO_NUMBER(telefone) "CONVERTER UMA COLUNA CHAR EM INT"
+FROM instrutor;
+
+
+

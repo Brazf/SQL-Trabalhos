@@ -1,0 +1,195 @@
+CREATE TABLE Partido(
+	sigla char(3) PRIMARY KEY,
+	nome varchar(70)
+);
+
+CREATE TABLE Candidato(
+	cpf varchar(11) PRIMARY KEY,
+	nome varchar(70),
+	cidade varchar(70),
+	estado char(2),
+	idade int,
+	sexo char(2),
+	sigla char(3),
+	FOREIGN KEY (sigla) references Partido (sigla)
+);
+
+CREATE TABLE Cargo(
+	id_cargo SERIAL PRIMARY KEY,
+	nome varchar(70)
+);
+
+CREATE TABLE Candidatura(
+	cpf varchar(11),
+	id_cargo SERIAL,
+	ano integer,
+	FOREIGN KEY (cpf) REFERENCES Candidato (cpf),
+	FOREIGN KEY (id_cargo) REFERENCES Cargo(id_cargo)
+);
+
+CREATE TABLE CandidatoEleito(
+	cpf varchar(11),
+	ano integer,
+	numero_votos integer,
+	FOREIGN KEY (cpf) REFERENCES Candidato (cpf)
+);
+-- DROPS DE TABLE
+drop table candidatoeleito;
+drop table candidatura;
+drop table candidato;
+drop table cargo;
+drop table partido;
+
+
+-- SELECTS DE TABLE
+SELECT * FROM PARTIDO;
+SELECT * FROM CANDIDATO;
+SELECT * FROM CandidatoEleito;
+SELECT * FROM cargo;
+SELECT * FROM candidatura;
+
+-- INSERTS DE TABLE
+
+--(insert partido)
+INSERT INTO partido (sigla, nome) VALUES ('PSB', 'Partido Socialista do Brasil'),
+('PT', 'Partido dos Trabalhadores'),
+('PSL', 'Partido Social Liberal'),
+('MDB', 'Movimento Democrático Brasileiro'),
+('PSD', 'Partido Social Democrático');
+
+--(insert candidato)
+INSERT INTO 
+Candidato (cpf, nome, cidade, estado, idade, sexo, sigla) 
+VALUES 
+('123456789', 'José Inácio de Souza', 'Buíque', 'PE', '67', 'M', 'PSB'),
+('123400125', 'Josefa de Tonório Santos', 'Caruaru', 'PE', '80', 'F', 'PSB'),
+('965872125', 'Jorge de Cabelo Duro', 'Caruaru', 'PE', '50', 'M', 'PT'),
+('129658625', 'Ana de Almeida Torres', 'Aricanduva', 'SP', '25', 'F', 'MDB'),
+('852365412', 'Tereza Socorro dos Santos', 'Petrópolis', 'RJ', '56', 'F', 'PSL'),
+('123498547', 'Marcelo de Melo', 'João Pessoa', 'PB', '32', 'M', 'PSD'),
+('128745200', 'Paulo Souza', 'Texeira de Freitas', 'BA', '43', 'M', 'PSB');
+
+--(insert cargo)
+INSERT INTO 
+Cargo (id_cargo, nome)
+VALUES
+(01, 'Prefeito'),
+(02, 'Governador'),
+(03, 'Senador'),
+(04, 'Deputado Federal'),
+(05, 'Deputado Estadual');
+
+--(insert candidatura)
+INSERT INTO
+Candidatura(cpf, id_cargo, ano)
+VALUES
+('123456789', '01', 2020),
+('123400125', '01', 2020),
+('965872125', '03', 2020),
+('129658625', '02', 2020),
+('852365412', '02',2020),
+('123498547', '03', 2020),
+('128745200', '01', 2020);
+
+--(insert candidatoeleito)
+INSERT INTO
+CandidatoEleito(cpf, ano, numero_votos)
+VALUES
+('123456789', 2020, 76506),
+('965872125', 2020, 10300),
+('129658625', 2020, 15600),
+('123498547', 2020, 34000),
+('852365412', 2020, 32000);
+
+
+--1. Listar o número de candidatos por sexo 
+SELECT sexo, COUNT(sexo) 
+FROM candidato
+GROUP BY sexo;
+
+--2. Listar o número de candidatos por sexo, apenas daqueles cujo total de candidatos seja maior que 3
+SELECT sexo, COUNT(sexo)
+FROM candidato
+GROUP BY sexo;
+
+--3. Listar a maior idade dos candidatos por estado
+SELECT MAX(idade)
+from candidato
+GROUP BY estado;
+
+--4. Listar a menor idade dos candidatos por estado
+
+SELECT MIN(idade)
+from candidato
+GROUP BY estado;
+
+
+--5. Listar a menor idade dos candidatos por estado, apenas daqueles cuja idade seja menor que 26
+
+SELECT MIN(idade)
+FROM candidato
+GROUP BY estado
+HAVING min(idade) < 26;
+
+--6. Listar a menor votação dos candidatos eleitos no ano de 2020
+
+SELECT MIN(numero_votos) as menor_votacao_do_candidato
+FROM CandidatoEleito;
+
+--7. Listar o total de cidades distintas dos candidatos
+
+SELECT DISTINCT(cidade) as cidades_distintas
+FROM candidato;
+
+--8. Listar os cargos em ordem alfabética
+
+SELECT nome
+FROM cargo
+ORDER BY nome ASC;
+
+--9. Listar os nomes dos candidatos, e dos seus partidos de filiação, por ordem alfabética dos nomes dos candidatos
+
+SELECT nome, sigla
+FROM candidato
+ORDER BY nome ASC;
+
+--10. Listar os nomes dos candidatos, o cargo de candidatura, e o ano no qual se candidatou.
+
+SELECT c.nome, p.nome, k.ano
+FROM candidato c, candidatura k, cargo p
+WHERE c.cpf = k.cpf and k.id_cargo = p.id_cargo;
+
+
+/*11. No código da questão anterior, ordenar o resultado, primeiro em ordem alfabética 
+de cargo (primeira ordenação). E em ordem alfabética de nomes de candidatos 
+(segunda ordenação). Ou seja, fazer duas ordenações dentro da mesma consulta.*/
+
+SELECT c.nome, p.nome, k.ano
+FROM candidato c, candidatura k, cargo p
+WHERE c.cpf = k.cpf and k.id_cargo = p.id_cargo
+ORDER BY p.nome,c.nome asc;
+
+
+--12. Listar os nomes dos candidatos que se candidataram em 2020, sua idade, cidade e sigla também, além de seus respectivos cargos
+
+SELECT c.nome, c.idade, c.cidade, c.sigla, p.nome
+FROM candidato c, candidatura k, cargo p
+WHERE c.cpf = k.cpf and k.id_cargo = p.id_cargo and k.ano = 2020;
+
+--13. Listar os nomes dos candidatos eleitos em 2020, e sua votação
+
+SELECT c.nome, c.idade, c.cidade, c.sigla, p.nome, t.numero_votos
+FROM candidato c, candidatura k, cargo p, candidatoeleito t
+WHERE c.cpf = k.cpf and k.id_cargo = p.id_cargo and t.cpf = c.cpf;
+
+--14. Listar o nome do candidato eleito com maior número de votos, e qual foi sua votação
+
+SELECT p.nome, k.numero_votos 
+FROM candidatoeleito k, candidato p
+WHERE k.numero_votos = (SELECT MAX(numero_votos) FROM candidatoeleito) and p.cpf = k.cpf;
+
+--15. Listar os candidatos que não são do Sudeste
+
+SELECT *
+FROM candidato
+WHERE estado NOT IN ('SP','RJ','ES','MG');
